@@ -58,17 +58,26 @@ class level3 extends StatelessWidget {
 class MyText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text('needs data');
+    //listen properity = false prevent this class for listening to provider
+    return Text(Provider.of<Data>(context, listen: false).myText);
   }
 }
 
 class MyTetxField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return TextField();
+    return TextField(
+      onChanged: (newValue) {
+        Provider.of<Data>(context).updateData(newValue);
+      },
+    );
   }
 }
 
 class Data extends ChangeNotifier {
   String myText = 'some Data';
+  void updateData(String data) {
+    myText = data;
+    notifyListeners();
+  }
 }
